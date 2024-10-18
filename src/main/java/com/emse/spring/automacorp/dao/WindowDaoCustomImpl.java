@@ -1,5 +1,6 @@
 package com.emse.spring.automacorp.dao;
 
+import com.emse.spring.automacorp.model.Room;
 import com.emse.spring.automacorp.model.WindowEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -16,6 +17,14 @@ public class WindowDaoCustomImpl implements WindowDaoCustom {
                 "where w.room.id = :id and s.value > 0.0 order by w.name";
         return em.createQuery(jpql, WindowEntity.class)
                 .setParameter("id", id)
+                .getResultList();
+    }
+
+    @Override
+    public List<WindowEntity> findAllWindowsByRoomName(String name) {
+        String jpql = "select w from WindowEntity w where w.room.name = :name";
+        return em.createQuery(jpql, WindowEntity.class)
+                .setParameter("name", name)
                 .getResultList();
     }
 }

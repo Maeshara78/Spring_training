@@ -38,4 +38,21 @@ class WindowDaoTest {
         List<WindowEntity> result = windowDao.findRoomsWithOpenWindows(-9L);
         Assertions.assertThat(result).isEmpty();
     }
+
+    @Test
+    public void shouldFindWindowsWithExistingRoomName() {
+        List<WindowEntity> result = windowDao.findAllWindowsByRoomName("Room1");
+        Assertions.assertThat(result)
+                .hasSize(2)
+                .extracting("id", "name")
+                .containsExactly(
+                        Tuple.tuple(-10L, "Window 1"),
+                        Tuple.tuple(-9L, "Window 2")
+                );
+    }
+
+    public void shouldNotFindWindowsWithWrongRoomName() {
+        List<WindowEntity> result = windowDao.findAllWindowsByRoomName("WrongName");
+        Assertions.assertThat(result).hasSize(0);
+    }
 }
