@@ -1,6 +1,7 @@
 package com.emse.spring.automacorp.dao;
 
 import com.emse.spring.automacorp.dao.WindowDao;
+import com.emse.spring.automacorp.model.Room;
 import com.emse.spring.automacorp.model.WindowEntity;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
@@ -11,11 +12,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @DataJpaTest // (1)
 class WindowDaoTest {
     @Autowired // (2)
     private WindowDao windowDao;
+
+    @Autowired
+    private RoomDao roomDao;
 
     @Test
     public void shouldFindAWindowById() {
@@ -58,13 +63,14 @@ class WindowDaoTest {
     }
 
     @Test
-    public void shouldDeleteAllWindowsByRoomName() {
-        List<WindowEntity> windowsBeforeDelete = windowDao.findAllWindowsByRoomName("Room1");
-        Assertions.assertThat(windowsBeforeDelete).hasSize(2);
+    public void shouldDeleteWindowsRoom() {
+        Room room = roomDao.getById(-10L);
+        List<Long> roomIds = room.getWindows().stream().map(WindowEntity::getId).collect(Collectors.toList());
+        Assertions.assertThat(roomIds).hasSize(2);
 
-        windowDao.deleteByRoom_Name("Room1");
+        windowDao.deleteByRoomId(-10L);
+        List<WindowEntity> result = windowDao.findAllById(roomIds);
+        Assertions.assertThat(result).isEmpty();
 
-        List<WindowEntity> windowsAfterDelete = windowDao.findAllWindowsByRoomName("Room1");
-        Assertions.assertThat(windowsAfterDelete).isEmpty();
     }
 }
