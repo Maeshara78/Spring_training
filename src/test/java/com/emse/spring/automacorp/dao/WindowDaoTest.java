@@ -71,6 +71,21 @@ class WindowDaoTest {
         windowDao.deleteByRoomId(-10L);
         List<WindowEntity> result = windowDao.findAllById(roomIds);
         Assertions.assertThat(result).isEmpty();
+    }
 
+    @Test
+    public void shouldCloseAllWindowsInRoom() {
+        windowDao.updateWindowStatusByRoomId(-10L, 0.0);
+
+        List<WindowEntity> windows = windowDao.findRoomsWithOpenWindows(-10L);
+        Assertions.assertThat(windows).isEmpty();
+    }
+
+    @Test
+    public void shouldOpenAllWindowsInRoom() {
+        windowDao.updateWindowStatusByRoomId(-10L, 1.0);
+
+        List<WindowEntity> windows = windowDao.findRoomsWithOpenWindows(-10L);
+        Assertions.assertThat(windows).hasSize(2);
     }
 }
