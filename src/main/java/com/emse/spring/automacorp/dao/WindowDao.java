@@ -4,4 +4,5 @@ import com.emse.spring.automacorp.model.WindowEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WindowDao extends JpaRepository<WindowEntity, Long>,WindowDaoCustom {
+    void deleteByRoom_Name(String name);
 }

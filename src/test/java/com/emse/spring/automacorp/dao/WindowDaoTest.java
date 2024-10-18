@@ -51,8 +51,20 @@ class WindowDaoTest {
                 );
     }
 
+    @Test
     public void shouldNotFindWindowsWithWrongRoomName() {
         List<WindowEntity> result = windowDao.findAllWindowsByRoomName("WrongName");
         Assertions.assertThat(result).hasSize(0);
+    }
+
+    @Test
+    public void shouldDeleteAllWindowsByRoomName() {
+        List<WindowEntity> windowsBeforeDelete = windowDao.findAllWindowsByRoomName("Room1");
+        Assertions.assertThat(windowsBeforeDelete).hasSize(2);
+
+        windowDao.deleteByRoom_Name("Room1");
+
+        List<WindowEntity> windowsAfterDelete = windowDao.findAllWindowsByRoomName("Room1");
+        Assertions.assertThat(windowsAfterDelete).isEmpty();
     }
 }
