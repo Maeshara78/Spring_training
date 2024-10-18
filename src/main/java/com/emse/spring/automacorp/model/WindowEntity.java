@@ -1,3 +1,6 @@
+package com.emse.spring.automacorp.model;
+
+import com.emse.spring.automacorp.model.SensorEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,15 +13,19 @@ public class WindowEntity {
     @Column(nullable = false)
     private String name;
 
-    // (5)
+    @OneToOne
     private SensorEntity windowStatus;
+
+    @ManyToOne
+    private Room room;
 
     public WindowEntity() {
     }
 
-    public WindowEntity(String name, SensorEntity sensor) {
+    public WindowEntity(String name, SensorEntity sensor, Room room) {
         this.windowStatus = sensor;
         this.name = name;
+        this.room = room;
     }
 
     public Long getId() {
@@ -37,11 +44,11 @@ public class WindowEntity {
         this.name = name;
     }
 
-    public Sensor getWindowStatus() {
+    public SensorEntity getWindowStatus() {
         return windowStatus;
     }
 
-    public void setWindowStatus(Sensor windowStatus) {
+    public void setWindowStatus(SensorEntity windowStatus) {
         this.windowStatus = windowStatus;
     }
 }
