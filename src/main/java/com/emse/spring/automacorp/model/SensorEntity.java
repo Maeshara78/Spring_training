@@ -19,7 +19,10 @@ public class SensorEntity {
     @Enumerated(EnumType.STRING) // (6).
     private SensorType sensorType;
 
-    public SensorEntity() { // (8).
+    public SensorEntity() {
+    }
+
+    public SensorEntity(Long id, String name, Double value, SensorType sensorType) { // (8).
     }
 
     public SensorEntity(SensorType sensorType, String name) { // (9).

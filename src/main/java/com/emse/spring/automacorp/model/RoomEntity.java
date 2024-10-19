@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "SP_ROOM")
-public class Room {
+public class RoomEntity {
     @Id
     @GeneratedValue
     private Long Id;
@@ -26,16 +26,39 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private Set<WindowEntity> windows = Set.of();
 
-    public Room() {
+    @OneToMany(mappedBy = "room")
+    private Set<HeaterEntity> heaters = Set.of();
+
+    @ManyToOne
+    private BuildingEntity building;
+
+    public RoomEntity() {
     }
 
-    public Room(Long id, Integer floor, String name, SensorEntity currentTemperature, Double targetTemperature, Set<WindowEntity> windows) {
+    public RoomEntity(Long id, Integer floor, String name, SensorEntity currentTemperature, Double targetTemperature, Set<WindowEntity> windows, BuildingEntity building) {
         Id = id;
         this.floor = floor;
         this.name = name;
         this.currentTemperature = currentTemperature;
         this.targetTemperature = targetTemperature;
         this.windows = windows;
+        this.building = building;
+    }
+
+    public Set<HeaterEntity> getHeaters() {
+        return heaters;
+    }
+
+    public void setHeaters(Set<HeaterEntity> heaters) {
+        this.heaters = heaters;
+    }
+
+    public BuildingEntity getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(BuildingEntity building) {
+        this.building = building;
     }
 
     public Long getId() {

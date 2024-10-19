@@ -1,7 +1,5 @@
 package com.emse.spring.automacorp.dao;
 
-import com.emse.spring.automacorp.model.Room;
-import com.emse.spring.automacorp.model.SensorEntity;
 import com.emse.spring.automacorp.model.WindowEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
 package com.emse.spring.automacorp.dao;
 
-import com.emse.spring.automacorp.model.Room;
+import com.emse.spring.automacorp.model.RoomEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class RoomDaoTest {
 
     @Test
     public void shouldFindARoomById() {
-        Room room = roomDao.getReferenceById(-10L);
+        RoomEntity room = roomDao.getReferenceById(-10L);
         Assertions.assertThat(room.getName()).isEqualTo("Room1");
         Assertions.assertThat(room.getCurrentTemperature()).isNull();
 

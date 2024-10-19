@@ -1,6 +1,5 @@
 package com.emse.spring.automacorp.model;
 
-import com.emse.spring.automacorp.model.SensorEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,15 +16,18 @@ public class WindowEntity {
     private SensorEntity windowStatus;
 
     @ManyToOne
-    private Room room;
+    private RoomEntity room;
 
     public WindowEntity() {
     }
 
-    public WindowEntity(String name, SensorEntity sensor, Room room) {
+    public WindowEntity(String name, SensorEntity sensor, RoomEntity room) {
         this.windowStatus = sensor;
         this.name = name;
         this.room = room;
+    }
+
+    public WindowEntity(Long id, String name, SensorEntity windowStatus) {
     }
 
     public Long getId() {
