@@ -27,7 +27,7 @@ public class HeaterMapperTest {
 
         // Assert
         HeaterRecord expectedHeater = new HeaterRecord(
-                11L,
+                111L,
                 "Heater1Room1Building",
                 11L,
                 0.0
