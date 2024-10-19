@@ -1,6 +1,7 @@
 package com.emse.spring.automacorp.mapper;
 
 import com.emse.spring.automacorp.model.*;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import com.emse.spring.automacorp.record.SensorRecord;
 
@@ -24,10 +25,12 @@ public class SensorMapperTest {
 
         // Assert
         SensorRecord expectedSensor = new SensorRecord(
-                11L,
-                "WindowStatus1Room1Building",
+                1111L,
+                "Status111",
                 0.0,
                 SensorType.STATUS
         );
+
+        Assertions.assertThat(sensor).usingRecursiveAssertion().isEqualTo(expectedSensor);
     }
 }
