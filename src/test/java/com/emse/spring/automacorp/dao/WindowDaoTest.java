@@ -71,7 +71,16 @@ class WindowDaoTest {
     }
 
     @Test
-    public void shouldCloseAllWindowsInRoom() {
+    public void shouldUpdateWindowStatusToOpen() {
+        windowDao.updateWindowStatusByRoomId(-10L, 1.0);
+
+        List<WindowEntity> windows = windowDao.findRoomsWithOpenWindows(-10L);
+        Assertions.assertThat(windows).hasSize(2);
+        Assertions.assertThat(windows).extracting("windowStatus.value").containsOnly(1.0);
+    }
+
+    @Test
+    public void shouldUpdateWindowStatusToClosed() {
         windowDao.updateWindowStatusByRoomId(-10L, 0.0);
 
         List<WindowEntity> windows = windowDao.findRoomsWithOpenWindows(-10L);
@@ -79,10 +88,10 @@ class WindowDaoTest {
     }
 
     @Test
-    public void shouldOpenAllWindowsInRoom() {
-        windowDao.updateWindowStatusByRoomId(-10L, 1.0);
+    public void shouldNotUpdateWindowStatusForNonExistentRoom() {
+        windowDao.updateWindowStatusByRoomId(-999L, 1.0);
 
-        List<WindowEntity> windows = windowDao.findRoomsWithOpenWindows(-10L);
-        Assertions.assertThat(windows).hasSize(2);
+        List<WindowEntity> windows = windowDao.findRoomsWithOpenWindows(-999L);
+        Assertions.assertThat(windows).isEmpty();
     }
 }

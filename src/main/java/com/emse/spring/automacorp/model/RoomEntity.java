@@ -7,8 +7,6 @@ import com.emse.spring.automacorp.record.WindowRecord;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -109,8 +107,12 @@ public class RoomEntity {
         this.name = name;
     }
 
-    public Double getCurrentTemperature() {
+    public Double getCurrentTemperatureValue() {
         return currentTemperature.getValue();
+    }
+
+    public SensorEntity getCurrentTemperature() {
+        return currentTemperature;
     }
 
     public Double getTargetTemperature() {

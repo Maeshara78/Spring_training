@@ -9,7 +9,7 @@ public class RoomMapper {
                 room.getId(),
                 room.getFloor(),
                 room.getName(),
-                room.getCurrentTemperature(),
+                room.getCurrentTemperatureValue(),
                 room.getTargetTemperature(),
                 room.getWindowsRecords(),
                 room.getHeatersRecords(),

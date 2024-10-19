@@ -25,6 +25,10 @@ public class SensorEntity {
     }
 
     public SensorEntity(Long id, String name, Double value, SensorType sensorType) { // (8).
+        this.id = id;
+        this.name = name;
+        this.value = value;
+        this.sensorType = sensorType;
     }
 
     public SensorEntity(SensorType sensorType, String name) { // (9).
