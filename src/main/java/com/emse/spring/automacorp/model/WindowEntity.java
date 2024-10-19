@@ -1,6 +1,12 @@
 package com.emse.spring.automacorp.model;
 
+import com.emse.spring.automacorp.mapper.RoomMapper;
+import com.emse.spring.automacorp.mapper.SensorMapper;
+import com.emse.spring.automacorp.record.RoomRecord;
+import com.emse.spring.automacorp.record.SensorRecord;
 import jakarta.persistence.*;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "SP_WINDOW")
@@ -21,13 +27,23 @@ public class WindowEntity {
     public WindowEntity() {
     }
 
-    public WindowEntity(String name, SensorEntity sensor, RoomEntity room) {
-        this.windowStatus = sensor;
+    public WindowEntity(Long id, String name, SensorEntity windowStatus, RoomEntity room) {
+        this.id = id;
         this.name = name;
+        this.windowStatus = windowStatus;
         this.room = room;
     }
 
+    public WindowEntity(String name, SensorEntity sensorEntity, RoomEntity roomEntity) {
+        this.name = name;
+        this.windowStatus = sensorEntity;
+        this.room = roomEntity;
+    }
+
     public WindowEntity(Long id, String name, SensorEntity windowStatus) {
+        this.id = id;
+        this.name = name;
+        this.windowStatus = windowStatus;
     }
 
     public Long getId() {
@@ -50,7 +66,27 @@ public class WindowEntity {
         return windowStatus;
     }
 
+    public SensorRecord getWindowStatusRecord() {
+        return SensorMapper.of(windowStatus);
+    }
+
+    public Double getWindowsSensorValue() {
+        return windowStatus.getValue();
+    }
+
     public void setWindowStatus(SensorEntity windowStatus) {
         this.windowStatus = windowStatus;
+    }
+
+    public RoomEntity getRoom() {
+        return room;
+    }
+
+    public Long getRoomId() {
+        return room.getId();
+    }
+
+    public void setRoom(RoomEntity room) {
+        this.room = room;
     }
 }

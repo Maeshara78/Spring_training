@@ -1,7 +1,11 @@
 package com.emse.spring.automacorp.model;
 
+import com.emse.spring.automacorp.mapper.RoomMapper;
+import com.emse.spring.automacorp.record.RoomRecord;
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -11,19 +15,40 @@ public class BuildingEntity {
     @GeneratedValue
     private Long Id;
 
+    @Column(nullable=false, length=255)  // (4).
+    private String name;
+
     @OneToOne
     private SensorEntity outsideTemperature;
 
     @OneToMany(mappedBy = "building")
-    private Set<RoomEntity> rooms = Set.of();
+    private List<RoomEntity> rooms = List.of();
 
     public BuildingEntity() {
     }
 
-    public BuildingEntity(Long id, SensorEntity outsideTemperature, Set<RoomEntity> rooms) {
+    public BuildingEntity(Long id, String name, SensorEntity outsideTemperature, List<RoomEntity> rooms) {
         Id = id;
+        this.name = name;
         this.outsideTemperature = outsideTemperature;
         this.rooms = rooms;
+    }
+
+    public BuildingEntity(Long id, String name, SensorEntity sensorEntity) {
+        Id = id;
+        this.name = name;
+        this.outsideTemperature = sensorEntity;
+    }
+
+    public BuildingEntity(long l, String buildingName) {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -38,15 +63,23 @@ public class BuildingEntity {
         return outsideTemperature;
     }
 
+    public Double getOutsideTemperatureValue() {
+        return outsideTemperature.getValue();
+    }
+
     public void setOutsideTemperature(SensorEntity outsideTemperature) {
         this.outsideTemperature = outsideTemperature;
     }
 
-    public Set<RoomEntity> getRooms() {
+    public List<RoomEntity> getRooms() {
         return rooms;
     }
 
-    public void setRooms(Set<RoomEntity> rooms) {
+    public List<RoomRecord> getRoomsRecord() {
+        return rooms.stream().map(RoomMapper::of).toList();
+    }
+
+    public void setRooms(List<RoomEntity> rooms) {
         this.rooms = rooms;
     }
 }

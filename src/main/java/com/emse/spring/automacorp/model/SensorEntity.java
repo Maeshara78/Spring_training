@@ -2,6 +2,8 @@ package com.emse.spring.automacorp.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity // (1).
 @Table(name = "SP_SENSOR") // (2).
 public class SensorEntity {

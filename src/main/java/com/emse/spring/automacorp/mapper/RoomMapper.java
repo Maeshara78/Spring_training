@@ -1,17 +1,19 @@
 package com.emse.spring.automacorp.mapper;
 
 import com.emse.spring.automacorp.model.RoomEntity;
+import com.emse.spring.automacorp.record.RoomRecord;
 
 public class RoomMapper {
-    public static RoomEntity of(RoomEntity room) {
-        return new RoomEntity(
+    public static RoomRecord of(RoomEntity room) {
+        return new RoomRecord(
                 room.getId(),
                 room.getFloor(),
                 room.getName(),
                 room.getCurrentTemperature(),
                 room.getTargetTemperature(),
-                room.getWindows(),
-                room.getBuilding()
+                room.getWindowsRecords(),
+                room.getHeatersRecords(),
+                room.getBuildingId()
         );
     }
 }

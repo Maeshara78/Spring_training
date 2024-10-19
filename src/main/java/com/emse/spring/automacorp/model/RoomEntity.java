@@ -1,8 +1,15 @@
 package com.emse.spring.automacorp.model;
 
+import com.emse.spring.automacorp.mapper.HeaterMapper;
+import com.emse.spring.automacorp.mapper.WindowMapper;
+import com.emse.spring.automacorp.record.HeaterRecord;
+import com.emse.spring.automacorp.record.WindowRecord;
 import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "SP_ROOM")
@@ -24,10 +31,10 @@ public class RoomEntity {
     private Double targetTemperature;
 
     @OneToMany(mappedBy = "room")
-    private Set<WindowEntity> windows = Set.of();
+    private List<WindowEntity> windows;
 
     @OneToMany(mappedBy = "room")
-    private Set<HeaterEntity> heaters = Set.of();
+    private List<HeaterEntity> heaters;
 
     @ManyToOne
     private BuildingEntity building;
@@ -35,22 +42,39 @@ public class RoomEntity {
     public RoomEntity() {
     }
 
-    public RoomEntity(Long id, Integer floor, String name, SensorEntity currentTemperature, Double targetTemperature, Set<WindowEntity> windows, BuildingEntity building) {
+    public RoomEntity(Long id, Integer floor, String name, SensorEntity currentTemperature, Double targetTemperature, List<WindowEntity> windows, List<HeaterEntity> heaters, BuildingEntity building) {
         Id = id;
-        this.floor = floor;
         this.name = name;
+        this.floor = floor;
         this.currentTemperature = currentTemperature;
         this.targetTemperature = targetTemperature;
         this.windows = windows;
         this.building = building;
-    }
-
-    public Set<HeaterEntity> getHeaters() {
-        return heaters;
-    }
-
-    public void setHeaters(Set<HeaterEntity> heaters) {
         this.heaters = heaters;
+    }
+
+    public RoomEntity(Long id, Integer floor, String name, SensorEntity currentTemperature, Double targetTemperature, List<WindowEntity> windows, List<HeaterEntity> heaters) {
+        Id = id;
+        this.name = name;
+        this.floor = floor;
+        this.currentTemperature = currentTemperature;
+        this.targetTemperature = targetTemperature;
+        this.windows = windows;
+        this.heaters = heaters;
+    }
+
+    public RoomEntity(Long id, String name, Integer floor, SensorEntity currentTemperature, Double targetTemperature) {
+        Id = id;
+        this.name = name;
+        this.floor = floor;
+        this.currentTemperature = currentTemperature;
+        this.targetTemperature = targetTemperature;
+    }
+
+    public RoomEntity(String name, SensorEntity currentTemperature, Integer floor) {
+        this.name = name;
+        this.currentTemperature = currentTemperature;
+        this.floor = floor;
     }
 
     public BuildingEntity getBuilding() {
@@ -85,12 +109,8 @@ public class RoomEntity {
         this.name = name;
     }
 
-    public SensorEntity getCurrentTemperature() {
-        return currentTemperature;
-    }
-
-    public void setCurrentTemperature(SensorEntity currentTemperature) {
-        this.currentTemperature = currentTemperature;
+    public Double getCurrentTemperature() {
+        return currentTemperature.getValue();
     }
 
     public Double getTargetTemperature() {
@@ -101,11 +121,35 @@ public class RoomEntity {
         this.targetTemperature = targetTemperature;
     }
 
-    public Set<WindowEntity> getWindows() {
+    public List<HeaterEntity> getHeaters() {
+        return heaters;
+    }
+
+    public List<HeaterRecord> getHeatersRecords() {
+        return heaters.stream().map(HeaterMapper::of).collect(Collectors.toList());
+    }
+
+    public void setHeaters(List<HeaterEntity> heaters) {
+        this.heaters = heaters;
+    }
+
+    public List<WindowEntity> getWindows() {
         return windows;
     }
 
-    public void setWindows(Set<WindowEntity> windows) {
+    public List<WindowRecord> getWindowsRecords() {
+        return windows.stream().map(WindowMapper::of).collect(Collectors.toList());
+    }
+
+    public void setWindows(List<WindowEntity> windows) {
         this.windows = windows;
+    }
+
+    public void setCurrentTemperature(SensorEntity currentTemperature) {
+        this.currentTemperature = currentTemperature;
+    }
+
+    public Long getBuildingId() {
+        return building.getId();
     }
 }
