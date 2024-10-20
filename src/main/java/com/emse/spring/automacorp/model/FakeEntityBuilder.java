@@ -19,6 +19,26 @@ public class FakeEntityBuilder {
         return building;
     }
 
+    public static RoomEntity createRoomEntityAlone(Long id, String name) {
+        // Sensor is recreated before each test
+        RoomEntity entity = new RoomEntity(
+                name,
+                createSensorEntity(1L, "Temp", TEMPERATURE, 23.2),
+                1);
+
+        entity.setTargetTemperature(26.4);
+        entity.setId(id);
+        entity.setWindows(List.of(
+                createWindowEntity(id * 10 + 1L, "Window1" + name, entity),
+                createWindowEntity(id * 10 + 2L, "Window2" + name, entity)
+        ));
+        entity.setHeaters(List.of(
+                createHeaterEntity(id * 10 + 1L, "Heater1" + name, entity),
+                createHeaterEntity(id * 10 + 2L, "Heater2" + name, entity)
+        ));
+        return entity;
+    }
+
     public static RoomEntity createRoomEntity(Long id, String name, BuildingEntity building) {
         // Sensor is recreated before each test
         RoomEntity entity = new RoomEntity(

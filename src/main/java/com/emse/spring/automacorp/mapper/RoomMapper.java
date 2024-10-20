@@ -13,7 +13,7 @@ public class RoomMapper {
                 room.getTargetTemperature(),
                 room.getWindowsRecords(),
                 room.getHeatersRecords(),
-                room.getBuildingId()
+                room.getBuildingId() != null ? room.getBuildingId() : null
         );
     }
 }
