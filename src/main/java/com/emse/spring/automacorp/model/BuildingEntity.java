@@ -1,12 +1,10 @@
 package com.emse.spring.automacorp.model;
 
 import com.emse.spring.automacorp.mapper.RoomMapper;
-import com.emse.spring.automacorp.record.RoomRecord;
+import com.emse.spring.automacorp.record.Room;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "SP_BUILDING")
@@ -75,7 +73,7 @@ public class BuildingEntity {
         return rooms;
     }
 
-    public List<RoomRecord> getRoomsRecord() {
+    public List<Room> getRoomsRecord() {
         return rooms.stream().map(RoomMapper::of).toList();
     }
 

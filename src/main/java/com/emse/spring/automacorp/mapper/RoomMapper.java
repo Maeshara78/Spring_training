@@ -1,11 +1,11 @@
 package com.emse.spring.automacorp.mapper;
 
 import com.emse.spring.automacorp.model.RoomEntity;
-import com.emse.spring.automacorp.record.RoomRecord;
+import com.emse.spring.automacorp.record.Room;
 
 public class RoomMapper {
-    public static RoomRecord of(RoomEntity room) {
-        return new RoomRecord(
+    public static Room of(RoomEntity room) {
+        return new Room(
                 room.getId(),
                 room.getFloor(),
                 room.getName(),

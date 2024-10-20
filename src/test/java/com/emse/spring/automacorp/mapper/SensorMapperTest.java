@@ -3,7 +3,7 @@ package com.emse.spring.automacorp.mapper;
 import com.emse.spring.automacorp.model.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import com.emse.spring.automacorp.record.SensorRecord;
+import com.emse.spring.automacorp.record.Sensor;
 
 import java.util.Comparator;
 
@@ -21,10 +21,10 @@ public class SensorMapperTest {
                 .orElseThrow(IllegalArgumentException::new);
 
         // Act
-        SensorRecord sensor = SensorMapper.of(sensorEntity);
+        Sensor sensor = SensorMapper.of(sensorEntity);
 
         // Assert
-        SensorRecord expectedSensor = new SensorRecord(
+        Sensor expectedSensor = new Sensor(
                 1111L,
                 "Status111",
                 0.0,

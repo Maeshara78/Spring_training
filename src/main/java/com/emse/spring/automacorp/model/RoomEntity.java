@@ -2,8 +2,8 @@ package com.emse.spring.automacorp.model;
 
 import com.emse.spring.automacorp.mapper.HeaterMapper;
 import com.emse.spring.automacorp.mapper.WindowMapper;
-import com.emse.spring.automacorp.record.HeaterRecord;
-import com.emse.spring.automacorp.record.WindowRecord;
+import com.emse.spring.automacorp.record.Heater;
+import com.emse.spring.automacorp.record.Window;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -127,7 +127,7 @@ public class RoomEntity {
         return heaters;
     }
 
-    public List<HeaterRecord> getHeatersRecords() {
+    public List<Heater> getHeatersRecords() {
         return heaters.stream().map(HeaterMapper::of).collect(Collectors.toList());
     }
 
@@ -139,7 +139,7 @@ public class RoomEntity {
         return windows;
     }
 
-    public List<WindowRecord> getWindowsRecords() {
+    public List<Window> getWindowsRecords() {
         return windows.stream().map(WindowMapper::of).collect(Collectors.toList());
     }
 

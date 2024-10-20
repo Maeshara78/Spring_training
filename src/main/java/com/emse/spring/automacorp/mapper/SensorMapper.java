@@ -1,11 +1,11 @@
 package com.emse.spring.automacorp.mapper;
 
 import com.emse.spring.automacorp.model.SensorEntity;
-import com.emse.spring.automacorp.record.SensorRecord;
+import com.emse.spring.automacorp.record.Sensor;
 
 public class SensorMapper {
-    public static SensorRecord of(SensorEntity sensor) {
-        return new SensorRecord(
+    public static Sensor of(SensorEntity sensor) {
+        return new Sensor(
                 sensor.getId(),
                 sensor.getName(),
                 sensor.getValue(),

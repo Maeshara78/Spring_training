@@ -1,12 +1,8 @@
 package com.emse.spring.automacorp.model;
 
-import com.emse.spring.automacorp.mapper.RoomMapper;
 import com.emse.spring.automacorp.mapper.SensorMapper;
-import com.emse.spring.automacorp.record.RoomRecord;
-import com.emse.spring.automacorp.record.SensorRecord;
+import com.emse.spring.automacorp.record.Sensor;
 import jakarta.persistence.*;
-
-import java.util.Objects;
 
 @Entity
 @Table(name = "SP_WINDOW")
@@ -66,7 +62,7 @@ public class WindowEntity {
         return windowStatus;
     }
 
-    public SensorRecord getWindowStatusRecord() {
+    public Sensor getWindowStatusRecord() {
         return SensorMapper.of(windowStatus);
     }
 
@@ -76,6 +72,10 @@ public class WindowEntity {
 
     public void setWindowStatus(SensorEntity windowStatus) {
         this.windowStatus = windowStatus;
+    }
+
+    public void setValue(Double value) {
+        this.windowStatus.setValue(value);
     }
 
     public RoomEntity getRoom() {

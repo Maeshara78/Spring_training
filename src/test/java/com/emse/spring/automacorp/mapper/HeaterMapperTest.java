@@ -2,9 +2,7 @@ package com.emse.spring.automacorp.mapper;
 
 import com.emse.spring.automacorp.model.FakeEntityBuilder;
 import com.emse.spring.automacorp.model.HeaterEntity;
-import com.emse.spring.automacorp.model.RoomEntity;
-import com.emse.spring.automacorp.record.HeaterRecord;
-import com.emse.spring.automacorp.record.RoomRecord;
+import com.emse.spring.automacorp.record.Heater;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -23,10 +21,10 @@ public class HeaterMapperTest {
                 .orElseThrow(IllegalArgumentException::new);
 
         // Act
-        HeaterRecord heater = HeaterMapper.of(heaterEntity);
+        Heater heater = HeaterMapper.of(heaterEntity);
 
         // Assert
-        HeaterRecord expectedHeater = new HeaterRecord(
+        Heater expectedHeater = new Heater(
                 111L,
                 "Heater1Room1Building",
                 11L,

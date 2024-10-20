@@ -1,9 +1,8 @@
 package com.emse.spring.automacorp.mapper;
 
 import com.emse.spring.automacorp.model.FakeEntityBuilder;
-import com.emse.spring.automacorp.model.SensorEntity;
 import com.emse.spring.automacorp.model.WindowEntity;
-import com.emse.spring.automacorp.record.WindowRecord;
+import com.emse.spring.automacorp.record.Window;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,10 +20,10 @@ public class WindowMapperTest {
                 .min(Comparator.comparing(WindowEntity::getName))
                 .orElseThrow(IllegalArgumentException::new);
         // Act
-        WindowRecord window = WindowMapper.of(windowEntity);
+        Window window = WindowMapper.of(windowEntity);
 
         // Assert
-        WindowRecord expectedWindow = new WindowRecord(
+        Window expectedWindow = new Window(
                 111L,
                 "Window1Room1Building",
                 0.0,
