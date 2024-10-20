@@ -21,7 +21,8 @@ public class SearchService {
     }
 
     public List<ApiGouvAdressDto> searchAddress(String query) {
-        String url = UriComponentsBuilder.fromUriString("/search")
+        String url = UriComponentsBuilder
+                .fromUriString("https://api-adresse.data.gouv.fr/search")
                 .queryParam("q", query)
                 .queryParam("limit", 15)
                 .build()
