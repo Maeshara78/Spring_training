@@ -5,13 +5,15 @@ import com.emse.spring.automacorp.dao.WindowDao;
 import com.emse.spring.automacorp.dao.SensorDao;
 import com.emse.spring.automacorp.dao.HeaterDao;
 import com.emse.spring.automacorp.mapper.RoomMapper;
+import com.emse.spring.automacorp.model.RoomEntity;
+import com.emse.spring.automacorp.model.SensorEntity;
+import com.emse.spring.automacorp.model.SensorType;
 import com.emse.spring.automacorp.record.Room;
+import com.emse.spring.automacorp.record.RoomCommand;
 import org.springframework.http.HttpHeaders;
 import jakarta.transaction.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -23,9 +25,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class RoomController {
     private final RoomDao roomDao;
+    private final SensorDao sensorDao;
 
-    public RoomController(RoomDao roomDao) {
+    public RoomController(RoomDao roomDao, SensorDao sensorDao) {
         this.roomDao = roomDao;
+        this.sensorDao = sensorDao;
     }
 
     @GetMapping
@@ -37,5 +41,17 @@ public class RoomController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping(path = "/{id}")
+    public Room findById(@PathVariable Long id) {
+        return roomDao.findById(id).map(RoomMapper::of).orElse(null);
+    }
 
+    @PostMapping
+    public ResponseEntity<Room> create(@RequestBody RoomCommand room) {
+        SensorEntity sensor = new SensorEntity("Sensor" + room.name(), room.currentTemperature(), SensorType.TEMPERATURE);
+        SensorEntity savedSensor = sensorDao.save(sensor);
+        RoomEntity entity = new RoomEntity(room.name(), savedSensor, room.targetTemperature(), room.floor());
+        RoomEntity savedRoom = roomDao.save(entity);
+        return ResponseEntity.ok(RoomMapper.of(savedRoom));
+    }
 }

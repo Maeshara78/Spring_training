@@ -9,11 +9,11 @@ public class RoomMapper {
                 room.getId(),
                 room.getFloor(),
                 room.getName(),
-                room.getCurrentTemperatureValue(),
+                room.getCurrentTemperature() != null ? room.getCurrentTemperatureValue() : null,
                 room.getTargetTemperature(),
-                room.getWindowsRecords(),
-                room.getHeatersRecords(),
-                room.getBuildingId() != null ? room.getBuildingId() : null
+                room.getWindows() != null ? room.getWindowsRecords() : null,
+                room.getHeaters() != null ? room.getHeatersRecords() : null,
+                room.getBuilding() != null ? room.getBuildingId() : null
         );
     }
 }

@@ -75,6 +75,13 @@ public class RoomEntity {
         this.floor = floor;
     }
 
+    public RoomEntity(String name, SensorEntity currentTemperature, Double targetTemperature, Integer floor) {
+        this.name = name;
+        this.currentTemperature = currentTemperature;
+        this.targetTemperature = targetTemperature;
+        this.floor = floor;
+    }
+
     public BuildingEntity getBuilding() {
         return building;
     }
