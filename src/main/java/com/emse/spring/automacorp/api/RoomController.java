@@ -48,10 +48,19 @@ public class RoomController {
 
     @PostMapping
     public ResponseEntity<Room> create(@RequestBody RoomCommand room) {
-        SensorEntity sensor = new SensorEntity("Sensor" + room.name(), room.currentTemperature(), SensorType.TEMPERATURE);
-        SensorEntity savedSensor = sensorDao.save(sensor);
-        RoomEntity entity = new RoomEntity(room.name(), savedSensor, room.targetTemperature(), room.floor());
-        RoomEntity savedRoom = roomDao.save(entity);
-        return ResponseEntity.ok(RoomMapper.of(savedRoom));
+        if (roomDao.findByName(room.name()).isEmpty()) {
+            SensorEntity sensor = new SensorEntity("Sensor" + room.name(), room.currentTemperature(), SensorType.TEMPERATURE);
+            SensorEntity savedSensor = sensorDao.save(sensor);
+            RoomEntity entity = new RoomEntity(room.name(), savedSensor, room.targetTemperature(), room.floor());
+            RoomEntity savedRoom = roomDao.save(entity);
+            return ResponseEntity.ok(RoomMapper.of(savedRoom));
+        } else {
+            RoomEntity existingRoom = roomDao.findByName(room.name()).get();
+            existingRoom.setFloor(room.floor());
+            existingRoom.setTargetTemperature(room.targetTemperature());
+            existingRoom.getCurrentTemperature().setValue(room.currentTemperature());
+            RoomEntity updatedRoom = roomDao.save(existingRoom);
+            return ResponseEntity.ok(RoomMapper.of(updatedRoom));
+        }
     }
 }
