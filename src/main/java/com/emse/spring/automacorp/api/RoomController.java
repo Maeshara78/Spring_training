@@ -26,10 +26,14 @@ import java.util.stream.Collectors;
 public class RoomController {
     private final RoomDao roomDao;
     private final SensorDao sensorDao;
+    private final HeaterDao heaterDao;
+    private final WindowDao windowDao;
 
-    public RoomController(RoomDao roomDao, SensorDao sensorDao) {
+    public RoomController(RoomDao roomDao, SensorDao sensorDao, HeaterDao heaterDao, WindowDao windowDao) {
         this.roomDao = roomDao;
         this.sensorDao = sensorDao;
+        this.heaterDao = heaterDao;
+        this.windowDao = windowDao;
     }
 
     @GetMapping
@@ -62,5 +66,29 @@ public class RoomController {
             RoomEntity updatedRoom = roomDao.save(existingRoom);
             return ResponseEntity.ok(RoomMapper.of(updatedRoom));
         }
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void delete(@PathVariable Long id) {
+        RoomEntity room = roomDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid room ID"));
+        heaterDao.deleteAll(room.getHeaters());
+        windowDao.deleteAll(room.getWindows());
+        roomDao.deleteById(id);
+    }
+
+    @PutMapping(path = "{id}/openWindows")
+    public ResponseEntity<Room> openWindows(@PathVariable Long id) {
+        RoomEntity room = roomDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid room ID"));
+        room.getWindows().forEach(window -> window.getWindowStatus().setValue(1.0));
+        RoomEntity updatedRoom = roomDao.save(room);
+        return ResponseEntity.ok(RoomMapper.of(updatedRoom));
+    }
+
+    @PutMapping(path = "{id}/closeWindows")
+    public ResponseEntity<Room> closeWindows(@PathVariable Long id) {
+        RoomEntity room = roomDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid room ID"));
+        room.getWindows().forEach(window -> window.getWindowStatus().setValue(0.0));
+        RoomEntity updatedRoom = roomDao.save(room);
+        return ResponseEntity.ok(RoomMapper.of(updatedRoom));
     }
 }
