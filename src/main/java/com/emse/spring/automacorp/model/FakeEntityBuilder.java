@@ -20,12 +20,11 @@ public class FakeEntityBuilder {
     }
 
     public static RoomEntity createRoomEntityAlone(Long id, String name) {
-        // Sensor is recreated before each test
         RoomEntity entity = new RoomEntity(
                 name,
                 createSensorEntity(1L, "Temp", TEMPERATURE, 23.2),
-                1);
-
+                1
+        );
         entity.setTargetTemperature(26.4);
         entity.setId(id);
         entity.setWindows(List.of(
@@ -40,12 +39,11 @@ public class FakeEntityBuilder {
     }
 
     public static RoomEntity createRoomEntity(Long id, String name, BuildingEntity building) {
-        // Sensor is recreated before each test
         RoomEntity entity = new RoomEntity(
                 name,
                 createSensorEntity(1L, "Temp", TEMPERATURE, 23.2),
-                1);
-
+                1
+        );
         entity.setBuilding(building);
         entity.setTargetTemperature(26.4);
         entity.setId(id);
@@ -61,7 +59,6 @@ public class FakeEntityBuilder {
     }
 
     public static WindowEntity createWindowEntity(Long id, String name, RoomEntity roomEntity) {
-        // Sensor is recreated before each test
         WindowEntity windowEntity = new WindowEntity(
                 name,
                 createSensorEntity(id * 10 + 1L, "Status" + id, SensorType.STATUS, 0.0),
@@ -72,7 +69,6 @@ public class FakeEntityBuilder {
     }
 
     public static HeaterEntity createHeaterEntity(Long id, String name, RoomEntity roomEntity) {
-        // Sensor is recreated before each test
         HeaterEntity heaterEntity = new HeaterEntity(
                 name,
                 createSensorEntity(id * 10 + 1L, "Status" + id, SensorType.STATUS, 0.0),
@@ -83,11 +79,10 @@ public class FakeEntityBuilder {
     }
 
     public static SensorEntity createSensorEntity(Long id, String name) {
-        return createSensorEntity(id, name, SensorType.TEMPERATURE, 0.0); // Default type and value
+        return createSensorEntity(id, name, TEMPERATURE, 0.0);
     }
 
     public static SensorEntity createSensorEntity(Long id, String name, SensorType type, Double value) {
-        // Sensor is recreated before each test
         SensorEntity sensorEntity = new SensorEntity(type, name);
         sensorEntity.setId(id);
         sensorEntity.setValue(value);
