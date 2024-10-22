@@ -2,14 +2,12 @@ package com.emse.spring.automacorp.model;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "SP_HEATER")
 public class HeaterEntity {
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -20,15 +18,7 @@ public class HeaterEntity {
     @OneToOne
     private SensorEntity heaterStatus;
 
-    public HeaterEntity() {
-    }
-
-    public HeaterEntity(Long id, String name, RoomEntity room, SensorEntity heaterStatus) {
-        Id = id;
-        this.name = name;
-        this.room = room;
-        this.heaterStatus = heaterStatus;
-    }
+    public HeaterEntity() {}
 
     public HeaterEntity(String name, SensorEntity heaterStatus, RoomEntity room) {
         this.name = name;
@@ -36,18 +26,12 @@ public class HeaterEntity {
         this.room = room;
     }
 
-    public HeaterEntity(Long id, String name, SensorEntity heaterStatus) {
-        Id = id;
-        this.name = name;
-        this.heaterStatus = heaterStatus;
-    }
-
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -62,12 +46,12 @@ public class HeaterEntity {
         return room;
     }
 
-    public Long getRoomId() {
-        return room.getId();
-    }
-
     public void setRoom(RoomEntity room) {
         this.room = room;
+    }
+
+    public Long getRoomId() {
+        return room.getId();
     }
 
     public SensorEntity getHeaterStatus() {
