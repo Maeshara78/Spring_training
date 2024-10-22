@@ -82,6 +82,10 @@ public class FakeEntityBuilder {
         return heaterEntity;
     }
 
+    public static SensorEntity createSensorEntity(Long id, String name) {
+        return createSensorEntity(id, name, SensorType.TEMPERATURE, 0.0); // Default type and value
+    }
+
     public static SensorEntity createSensorEntity(Long id, String name, SensorType type, Double value) {
         // Sensor is recreated before each test
         SensorEntity sensorEntity = new SensorEntity(type, name);

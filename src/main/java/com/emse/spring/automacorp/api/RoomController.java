@@ -10,7 +10,6 @@ import com.emse.spring.automacorp.model.SensorEntity;
 import com.emse.spring.automacorp.model.SensorType;
 import com.emse.spring.automacorp.record.Room;
 import com.emse.spring.automacorp.record.RoomCommand;
-import org.springframework.http.HttpHeaders;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
