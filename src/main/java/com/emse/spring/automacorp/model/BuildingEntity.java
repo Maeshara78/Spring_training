@@ -11,9 +11,9 @@ import java.util.List;
 public class BuildingEntity {
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
-    @Column(nullable=false, length=255)  // (4).
+    @Column(nullable = false, length = 255)
     private String name;
 
     @OneToOne
@@ -22,23 +22,12 @@ public class BuildingEntity {
     @OneToMany(mappedBy = "building")
     private List<RoomEntity> rooms = List.of();
 
-    public BuildingEntity() {
-    }
+    public BuildingEntity() {}
 
-    public BuildingEntity(Long id, String name, SensorEntity outsideTemperature, List<RoomEntity> rooms) {
-        Id = id;
+    public BuildingEntity(Long id, String name, SensorEntity outsideTemperature) {
+        this.id = id;
         this.name = name;
         this.outsideTemperature = outsideTemperature;
-        this.rooms = rooms;
-    }
-
-    public BuildingEntity(Long id, String name, SensorEntity sensorEntity) {
-        Id = id;
-        this.name = name;
-        this.outsideTemperature = sensorEntity;
-    }
-
-    public BuildingEntity(long l, String buildingName) {
     }
 
     public String getName() {
@@ -50,11 +39,11 @@ public class BuildingEntity {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public SensorEntity getOutsideTemperature() {
