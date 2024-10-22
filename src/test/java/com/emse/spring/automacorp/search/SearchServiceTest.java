@@ -1,9 +1,8 @@
-package com.emse.spring.automacorp.adress;
+package com.emse.spring.automacorp.search;
 
 import com.emse.spring.automacorp.dto.ApiGouvAdressDto;
 import com.emse.spring.automacorp.dto.ApiGouvFeatureDto;
 import com.emse.spring.automacorp.dto.ApiGouvResponseDto;
-import com.emse.spring.automacorp.search.SearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;

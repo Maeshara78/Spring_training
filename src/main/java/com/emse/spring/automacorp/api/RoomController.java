@@ -90,4 +90,6 @@ public class RoomController {
         RoomEntity updatedRoom = roomDao.save(room);
         return ResponseEntity.ok(RoomMapper.of(updatedRoom));
     }
+
+
 }

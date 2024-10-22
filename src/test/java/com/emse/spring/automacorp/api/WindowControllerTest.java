@@ -84,10 +84,10 @@ class WindowControllerTest {
         Mockito.when(windowDao.findById(1L)).thenReturn(Optional.empty());
 
         mockMvc.perform(
-                        MockMvcRequestBuilders
-                                .put("/api/windows/1")
-                                .content(json)
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                MockMvcRequestBuilders
+                        .put("/api/windows/1")
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
                 )
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
