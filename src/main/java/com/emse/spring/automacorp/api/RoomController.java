@@ -5,14 +5,18 @@ import com.emse.spring.automacorp.dao.WindowDao;
 import com.emse.spring.automacorp.dao.SensorDao;
 import com.emse.spring.automacorp.dao.HeaterDao;
 import com.emse.spring.automacorp.mapper.RoomMapper;
+import com.emse.spring.automacorp.mapper.WindowMapper;
 import com.emse.spring.automacorp.model.RoomEntity;
 import com.emse.spring.automacorp.model.SensorEntity;
 import com.emse.spring.automacorp.model.SensorType;
 import com.emse.spring.automacorp.record.Room;
 import com.emse.spring.automacorp.record.RoomCommand;
+import com.emse.spring.automacorp.record.Window;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -66,6 +70,21 @@ public class RoomController {
             return ResponseEntity.ok(RoomMapper.of(updatedRoom));
         }
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Room> update(@PathVariable Long id, @RequestBody RoomCommand room) {
+        RoomEntity existingRoom = roomDao.findById(id)
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found"));
+        
+        existingRoom.setFloor(room.floor());
+        existingRoom.setTargetTemperature(room.targetTemperature());
+        if (room.currentTemperature() != null) {
+            existingRoom.getCurrentTemperature().setValue(room.currentTemperature());
+        }
+        
+        RoomEntity updatedRoom = roomDao.save(existingRoom);
+        return ResponseEntity.ok(RoomMapper.of(updatedRoom));
+    }
 
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
@@ -73,6 +92,12 @@ public class RoomController {
         heaterDao.deleteAll(room.getHeaters());
         windowDao.deleteAll(room.getWindows());
         roomDao.deleteById(id);
+    }
+    
+    @GetMapping(path = "{id}/windows")
+    public List<Window> getWindows(@PathVariable Long id) {
+        RoomEntity room = roomDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid room ID"));
+        return room.getWindows().stream().map(WindowMapper::of).collect(Collectors.toList());
     }
 
     @PutMapping(path = "{id}/openWindows")
