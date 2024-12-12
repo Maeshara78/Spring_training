@@ -65,17 +65,21 @@ public class WindowEntity {
     public Sensor getWindowStatusRecord() {
         return SensorMapper.of(windowStatus);
     }
-
+    
     public Double getWindowsSensorValue() {
-        return windowStatus.getValue();
+        return windowStatus != null ? windowStatus.getValue() : 0.0; // Return a default value
     }
 
     public void setWindowStatus(SensorEntity windowStatus) {
         this.windowStatus = windowStatus;
     }
-
+    
     public void setValue(Double value) {
-        this.windowStatus.setValue(value);
+        if (windowStatus != null) {
+            this.windowStatus.setValue(value);
+        } else {
+            throw new IllegalStateException("Cannot set value: windowStatus is null");
+        }
     }
 
     public RoomEntity getRoom() {

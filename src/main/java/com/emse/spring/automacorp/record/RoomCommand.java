@@ -1,4 +1,11 @@
 package com.emse.spring.automacorp.record;
 
-public record RoomCommand(Integer floor, String name, Double currentTemperature, Double targetTemperature) {
-}
+import java.util.List;
+
+public record RoomCommand(
+  Integer floor,
+  String name,
+  Double currentTemperature,
+  Double targetTemperature,
+  List<WindowCommand> windows
+) {}

@@ -6,6 +6,7 @@ import com.emse.spring.automacorp.record.Heater;
 import com.emse.spring.automacorp.record.Window;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +28,9 @@ public class RoomEntity {
 
     @Column
     private Double targetTemperature;
-
-    @OneToMany(mappedBy = "room")
-    private List<WindowEntity> windows;
+    
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WindowEntity> windows = new ArrayList<>();
 
     @OneToMany(mappedBy = "room")
     private List<HeaterEntity> heaters;
