@@ -3,12 +3,14 @@ package com.emse.spring.automacorp.api;
 import com.emse.spring.automacorp.dao.RoomDao;
 import com.emse.spring.automacorp.dao.WindowDao;
 import com.emse.spring.automacorp.dao.SensorDao;
+import com.emse.spring.automacorp.mapper.RoomMapper;
 import com.emse.spring.automacorp.mapper.SensorMapper;
 import com.emse.spring.automacorp.mapper.WindowMapper;
 import com.emse.spring.automacorp.model.RoomEntity;
 import com.emse.spring.automacorp.model.SensorEntity;
 import com.emse.spring.automacorp.model.SensorType;
 import com.emse.spring.automacorp.model.WindowEntity;
+import com.emse.spring.automacorp.record.Room;
 import com.emse.spring.automacorp.record.Sensor;
 import com.emse.spring.automacorp.record.Window;
 import com.emse.spring.automacorp.record.WindowCommand;
@@ -71,6 +73,22 @@ public class WindowController {
         entity.setRoom(room);
         // (11)
         return ResponseEntity.ok(WindowMapper.of(entity));
+    }
+    
+    @PutMapping(path = "{id}/openWindow")
+    public ResponseEntity<Window> openWindow(@PathVariable Long id) {
+        WindowEntity window = windowDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid window ID"));
+        window.setValue(1.0);
+        WindowEntity updatedWindow = windowDao.save(window);
+        return ResponseEntity.ok(WindowMapper.of(updatedWindow));
+    }
+    
+    @PutMapping(path = "{id}/closeWindow")
+    public ResponseEntity<Window> closeWindow(@PathVariable Long id) {
+        WindowEntity window = windowDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid window ID"));
+        window.setValue(0.0);
+        WindowEntity updatedWindow = windowDao.save(window);
+        return ResponseEntity.ok(WindowMapper.of(updatedWindow));
     }
 
     @DeleteMapping(path = "/{id}")

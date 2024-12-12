@@ -76,6 +76,7 @@ public class RoomController {
         RoomEntity existingRoom = roomDao.findById(id)
           .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found"));
         
+        existingRoom.setName(room.name());
         existingRoom.setFloor(room.floor());
         existingRoom.setTargetTemperature(room.targetTemperature());
         if (room.currentTemperature() != null) {
